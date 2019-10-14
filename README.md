@@ -35,6 +35,7 @@
 * To get public keys from the accounts's external uuid, check the api 'getKeysFromExternalId'
    in the Controller.kt.
           Input: {"accountName": "$accountName"} from PartyA
+          
           Note: AccountInfo state will be retrieved from accountName and externalid will be used from
                 the state to get keys.
 
