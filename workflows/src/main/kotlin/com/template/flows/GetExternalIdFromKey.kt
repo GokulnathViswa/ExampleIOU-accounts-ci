@@ -35,17 +35,22 @@ import java.util.UUID
  **/
 @StartableByRPC
 class GetExternalIdFromKey(val key:String) :
-        FlowLogic<UUID>() {
+        FlowLogic<String>() {
     override val progressTracker = ProgressTracker()
 
     @Suspendable
-    override fun call(): UUID {
+    override fun call(): String {
 
         //parse the public key to convert string to PublicKey
         val pubKey= parsePublicKeyBase58(key)
         //get the  account mapped to the key
         var id = accountService.accountIdForKey(pubKey)
-        return id
+        var externalIdForKey:UUID = UUID.randomUUID()
+
+        if(id != null){
+            externalIdForKey = id
+        }
+        return "$externalIdForKey is the ExternalId for the public key $pubKey "
 
     }
 }
