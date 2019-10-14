@@ -10,12 +10,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.*
-//import com.r3.corda.lib.accounts.workflows.externalIdCriteria
 import com.template.flows.*
-
 import org.json.simple.JSONObject
-
-//import net.corda.testing.driver.NodeParameters
 import java.util.*
 
 /**
@@ -280,26 +276,19 @@ class Controller(private val rpc: NodeRPCConnection) {
         }
     }
 
-    //Identity  service
+     //Identity  service
     //CQE-46
-    @PostMapping(value = ["getAccountFromKey"],produces = [MediaType.APPLICATION_JSON_VALUE], headers = ["Content-Type=application/json"])
+    @PostMapping(value = ["getExternalIdFromKey"],produces = [MediaType.APPLICATION_JSON_VALUE], headers = ["Content-Type=application/json"])
     fun getAccountFromKey( @RequestBody request: JSONObject): JSONObject {
         val key = request.get("key").toString()
-        val JSONArrayRequests = ArrayList<JSONObject>()
+
         return try {
 
-            // Get the account from GetAccount by passing account name
-            val accountResponse = proxy.startFlowDynamic(GetAccountFromKey::class.java, key).returnValue.getOrThrow()
-
-
-
+            // Get the externalId from the public key
+            val externalId = proxy.startFlowDynamic(GetExternalIdFromKey::class.java, key).returnValue.getOrThrow()
 
             var rootObject = JSONObject()
-            rootObject.put("name",accountResponse.state.data.name)
-            rootObject.put("id", accountResponse.state.data.identifier.id)
-            rootObject.put("host", accountResponse.state.data.host)
-
-
+            rootObject.put("externalId", externalId)
 
             // Return the final list
             return rootObject
@@ -319,17 +308,13 @@ class Controller(private val rpc: NodeRPCConnection) {
         val accountName = request.get("accountName").toString()
         var   JsonArrayRequests=ArrayList<JSONObject>()
         return try {
-
-
             val keyResponse = proxy.startFlowDynamic(GetKeysForExternalId::class.java, accountName).returnValue.getOrThrow()
 
             for(i in keyResponse){
                 var rootObject=JSONObject()
                 rootObject.put("key",i)
                 JsonArrayRequests.add(rootObject)
-
             }
-
             // Return the final list
             return JsonArrayRequests
         } catch (ex: Throwable) {
