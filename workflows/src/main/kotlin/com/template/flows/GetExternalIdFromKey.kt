@@ -4,7 +4,6 @@ import co.paralleluniverse.fibers.Suspendable
 import com.r3.corda.lib.accounts.contracts.states.AccountInfo
 import com.r3.corda.lib.accounts.workflows.flows.AccountInfoByName
 import com.r3.corda.lib.accounts.workflows.flows.CreateAccount
-//import com.r3.corda.lib.ci.RequestKeyForAccount
 import com.template.states.AccountsIOUState
 import net.corda.core.contracts.Amount
 import net.corda.core.contracts.StateAndRef
