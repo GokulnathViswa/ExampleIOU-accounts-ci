@@ -6,7 +6,6 @@ import com.r3.corda.lib.accounts.workflows.flows.AccountInfoByName
 import com.r3.corda.lib.accounts.workflows.flows.CreateAccount
 import com.r3.corda.lib.accounts.workflows.flows.RequestAccountInfoFlow
 import com.r3.corda.lib.accounts.workflows.internal.accountService
-//import com.r3.corda.lib.ci.RequestKeyForAccount
 import com.template.states.AccountsIOUState
 import net.corda.core.contracts.Amount
 import net.corda.core.contracts.StateAndRef
@@ -41,7 +40,7 @@ class GetKeysForExternalId(val accountName:String) :
         val accountState=subFlow(AccountInfoByName(accountName)).single()
         val externalId=accountState.state.data.identifier.id
         //get the list of keys  mapped to the id
-        val publicKeyList = serviceHub.identityService.publicKeysForExternalId(externalId)
+        val publicKeyList = accountService.accountKeys(externalId)
         return publicKeyList
     }
 }
