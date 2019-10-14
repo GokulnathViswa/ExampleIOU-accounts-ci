@@ -45,7 +45,7 @@ class GetExternalIdFromKey(val key:String) :
         val pubKey= parsePublicKeyBase58(key)
         //get the  account mapped to the key
         var id = accountService.accountIdForKey(pubKey)
-        return id?:FlowException("No externalId found to the key '$pubKey'")
+        return id
 
     }
 }
