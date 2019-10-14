@@ -28,14 +28,13 @@
           Input: {"lenderHostName": "PartyA",
                   "borrowerAccountName": "bob"} from PartyB
 
-* To get account details from the accounts's publicKey, check the api 'getAccountFromKey'
+* To get ExternalId from the accounts's publicKey, check the api 'getExternalIdFromKey'
   in the Controller.kt.
          Input: {"key": "$publicKey"} from PartyA
 
 * To get public keys from the accounts's external uuid, check the api 'getKeysFromExternalId'
    in the Controller.kt.
           Input: {"accountName": "$accountName"} from PartyA
-
           Note: AccountInfo state will be retrieved from accountName and externalid will be used from
                 the state to get keys.
 
